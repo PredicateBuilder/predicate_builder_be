@@ -4,9 +4,9 @@ const app = express();
 app.set('port', process.env.PORT || 3000);
 app.locals.title = 'Predicate Builder';
 
-app.get('/', (req, res) => {
+app.get('/', function(req, res){
   const { filters } = req.params;
-  let statement = filters.map((filter, index) => {
+  let statement = filters.map(function(filter, index) {
     const { predicate, operator, customValue } = filter;
     if (index === 0) {
       return `SELECT * FROM session WHERE ${predicate} ${operator} ${customValue}`
@@ -18,6 +18,7 @@ app.get('/', (req, res) => {
       return `AND ${predicate} ${operator} ${customValue};`
     }
   }).join(' ')
+  res.send(statement)
 });
 
 app.listen(app.get('port'), () => {
