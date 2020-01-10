@@ -18,6 +18,7 @@ app.get('/', function(req, res){
       return `AND ${predicate} ${operator} ${customValue};`
     }
   }).join(' ')
+  console.log(statement);
   res.status(200).json(statement);
 });
 
