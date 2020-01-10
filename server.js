@@ -4,8 +4,20 @@ const app = express();
 app.set('port', process.env.PORT || 3000);
 app.locals.title = 'Predicate Builder';
 
-app.get('/', (request, response) => {
-  response.send();
+app.get('/', (req, res) => {
+  const { filters } = req.params;
+  let statement = filters.map((filter, index) => {
+    const { predicate, operator, customValue } = filter;
+    if (index === 0) {
+      return `SELECT * FROM session WHERE ${predicate} ${operator} ${customValue}`
+    }
+    if (index <= filters.length - 1) {
+      return `AND ${predicate} ${operator} ${customValue}`
+    }
+    if (index === filters.length) {
+      return `AND ${predicate} ${operator} ${customValue};`
+    }
+  }).join(' ')
 });
 
 app.listen(app.get('port'), () => {
