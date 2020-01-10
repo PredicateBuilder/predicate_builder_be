@@ -18,7 +18,7 @@ app.get('/', function(req, res){
       return `AND ${predicate} ${operator} ${customValue};`
     }
   }).join(' ')
-  res.send(statement)
+  res.status(200).json(statement);
 });
 
 app.listen(app.get('port'), () => {
