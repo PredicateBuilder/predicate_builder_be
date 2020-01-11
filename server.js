@@ -11,7 +11,7 @@ app.get('/', function(req, res){
   filters = JSON.parse(filters)
   let statement = filters.map(function (filter, index) {
     const { predicate, operator, customValue1, customValue2 } = filter;
-    const customFields = customValue2 === null ? customValue1 : `${customValue1} AND ${customValue2}`
+    const customFields = customValue2 === 'null' ? customValue1 : `${customValue1} AND ${customValue2}`
     if (index === 0) {
       return `SELECT * FROM session WHERE ${predicate} ${operator} ${customFields}`
     }
