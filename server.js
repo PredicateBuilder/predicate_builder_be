@@ -12,7 +12,6 @@ app.get('/', function(req, res){
   let { filters } = req.query;
   filters = JSON.parse(filters)
   let statement = filters.map(function (filter, index) {
-    console.log(filter)
     const { predicate, operator, customValue1, customValue2 } = filter;
     const customFields = operator === 'LIKE' ? `${customValue1}%` : customValue2 !== 'undefined' ? `${customValue1} AND ${customValue2}` : `${customValue1}`;
     if (index === 0) {
