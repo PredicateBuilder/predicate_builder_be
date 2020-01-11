@@ -12,8 +12,9 @@ app.get('/', function(req, res){
   let { filters } = req.query;
   filters = JSON.parse(filters)
   let statement = filters.map(function (filter, index) {
+    console.log(filter)
     const { predicate, operator, customValue1, customValue2 } = filter;
-    const customFields = customValue2 === 'undefined' || customValue2 === undefined  ? customValue1 : `${customValue1} AND ${customValue2}`
+    const customFields = operator === 'LIKE' ? `${customValue1}%` : customValue2 !== 'undefined' ? `${customValue1} AND ${customValue2}` : `${customValue1}`;
     if (index === 0) {
       return `SELECT * FROM session WHERE ${predicate} ${operator} ${customFields}`
     }
